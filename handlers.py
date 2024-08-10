@@ -121,29 +121,28 @@ async def answer_handler(msg: Message):
         await question_flow(msg)
 
 def question_handler(text, chat_id):
-    match text:
-        case '1':
+    if text == '1':
             tmp1 = cursor.execute('SELECT count_1 FROM geshtalt WHERE chat_id = ?', (chat_id,)).fetchone()[0]
             cursor.execute('UPDATE geshtalt SET count_1 = ? WHERE chat_id = ?', (tmp1+1, chat_id))
             db.commit()
             return True
-        case '2':
+    elif text == '2':
             tmp2 = cursor.execute('SELECT count_2 FROM geshtalt WHERE chat_id = ?', (chat_id,)).fetchone()[0]
             cursor.execute('UPDATE geshtalt SET count_2 = ? WHERE chat_id = ?', (tmp2+1, chat_id))
             db.commit()
             return True
-        case '3':
+    elif text == '3':
             tmp3 = cursor.execute('SELECT count_3 FROM geshtalt WHERE chat_id = ?', (chat_id,)).fetchone()[0]
             cursor.execute('UPDATE geshtalt SET count_3 = ? WHERE chat_id = ?', (tmp3+1, chat_id))
             db.commit()
             return True
-        case '4':
+    elif text == '4':
             tmp4 = cursor.execute('SELECT count_4 FROM geshtalt WHERE chat_id = ?', (chat_id,)).fetchone()[0]
             cursor.execute('UPDATE geshtalt SET count_4 = ? WHERE chat_id = ?', (tmp4+1, chat_id))
             db.commit()
             return True
-        case _:
-            return False
+    else:
+        return False
 
 def search_id(chat_id):
     is_new = cursor.execute('SELECT * FROM geshtalt WHERE chat_id = ?', (chat_id,)).fetchone()
